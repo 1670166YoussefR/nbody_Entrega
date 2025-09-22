@@ -7,6 +7,9 @@ public class Universe {
   private double radius;
   private Body[] bodies;
 
+    public double getRadius() { return radius; }
+    public int getNumBodies() { return numBodies; }
+    public Vector getBodyPosition(int i) { return bodies[i].getPosition(); }
 
   public Universe(String fname) {
     try {
@@ -31,13 +34,6 @@ public class Universe {
       }
     } catch (FileNotFoundException e) { e.printStackTrace(); }
   } //
-
-
-  public double getRadius() { return radius; }
-  public int getNumBodies() { return numBodies; }
-  public Vector getBodyPosition(int i) { return bodies[i].getPosition(); }
-  public Vector getBodyVelocity(int i) { return bodies[i].getVelocity(); }
-  public double getBodyMass(int i) { return bodies[i].getMass(); }
 
   public void update(double dt) {
     // 1) inicializa fuerzas a 0
