@@ -15,8 +15,6 @@ public class Body {
   public Vector getPosition() { return r; }
   public Vector getVelocity() { return v; }
   public double getMass() { return mass; }
-  public void setPosition(Vector p) { r = p; }
-  public void setVelocity(Vector vel) { v = vel; }
 
     public Body(Vector r, Vector v, double mass) {
         this.r = r;
