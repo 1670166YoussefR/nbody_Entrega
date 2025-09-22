@@ -1,0 +1,44 @@
+@startuml
+class Main {
+  + main(args: String[]): void
+}
+
+class NBodySimulator {
+  - timeStep: double
+  - pauseTime: int
+  - trace: boolean
+  - universe: Universe
+  + NBodySimulator(u: Universe, dt: double, pt: int, trace: boolean)
+  + simulate(): void
+  - drawUniverse(): void
+  - createCanvas(): void
+}
+
+class Universe {
+  - numBodies: int
+  - radius: double
+  - bodies: Body[]
+  + Universe(fname: String)
+  + update(dt: double): void
+  + getBodyPosition(i: int): Vector
+  + getNumBodies(): int
+  + getRadius(): double
+}
+
+class Body {
+  - position: Vector
+  - velocity: Vector
+  - mass: double
+  + Body(r: Vector, v: Vector, mass: double)
+  + move(f: Vector, dt: double): void
+  + forceFrom(b: Body): Vector
+  + getPosition(): Vector
+  + toString(): String
+}
+
+Main --> Universe
+Main --> NBodySimulator
+NBodySimulator --> Universe
+Universe *-- Body
+Body --> Vector
+@enduml
