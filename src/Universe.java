@@ -7,9 +7,9 @@ public class Universe {
   private double radius;
   private Body[] bodies;
 
-    public double getRadius() { return radius; }
-    public int getNumBodies() { return numBodies; }
-    public Vector getBodyPosition(int i) { return bodies[i].getPosition(); }
+  public double getRadius() { return radius; }
+  public int getNumBodies() { return numBodies; }
+  public Vector getBodyPosition(int i) { return bodies[i].getPosition(); }
 
   public Universe(String fname) {
     try {
@@ -36,21 +36,23 @@ public class Universe {
   } //
 
   public void update(double dt) {
-    // 1) inicializa fuerzas a 0
+    // Array de vectores para almacenar la fuerza que se aplica en cada cuerpo
     Vector[] f = new Vector[numBodies];
     for (int i = 0; i < numBodies; i++) {
       f[i] = new Vector(new double[2]);
     }
-    // 2) acumula fuerzas de todos sobre cada i (i != j)
+    // Bucle para cada par de cuerpos
     for (int i = 0; i < numBodies; i++) {
       for (int j = 0; j < numBodies; j++) {
         if (i != j) {
+          // Se suma la fuerza que el cuerpo j ejerce sobre el cuerpo i
           f[i] = f[i].plus(bodies[i].forceFrom(bodies[j]));
         }
       }
     }
-    // 3) mueve cada cuerpo con su fuerza total
+    // Una vez calculada todas las fuerzas, se mueve el cuerpo
     for (int i = 0; i < numBodies; i++) {
+      // Aplicamos la fuerza total a cada cuerpo durante un intervalo de tiempo dt
       bodies[i].move(f[i], dt);
     }
   }
