@@ -12,10 +12,9 @@ public class NBodySimulator {
   } //
 
   private void createCanvas() {
-    // StdDraw.setCanvasSize(700, 700); // opcional
     StdDraw.enableDoubleBuffering();
     StdDraw.setPenRadius(0.025);
-    double radius = universe.getRadius();      // del fichero (2ª línea)
+    double radius = universe.getRadius();
     StdDraw.setXscale(-radius, +radius);
     StdDraw.setYscale(-radius, +radius);
   } //
@@ -26,17 +25,17 @@ public class NBodySimulator {
       Vector p = universe.getBodyPosition(i);
       StdDraw.point(p.cartesian(0), p.cartesian(1));
     }
-  } // (esto es lo que pedía completar)
+  }
 
   public void simulate() {
     createCanvas();
-    if (trace) StdDraw.clear(StdDraw.GRAY); // fondo gris para traza
+    if (trace) StdDraw.clear(StdDraw.GRAY);
     while (true) {
-      if (!trace) StdDraw.clear();        // sin traza, limpiamos cada frame
-      universe.update(timeStep);          // actualizar posiciones
-      drawUniverse();                     // dibujar
+      if (!trace) StdDraw.clear();
+      universe.update(timeStep);
+      drawUniverse();
       StdDraw.show();
-      StdDraw.pause(pauseTime);           // puede ser 0
+      StdDraw.pause(pauseTime);
     }
-  } // (estructura del bucle según guía del enunciado)
+  }
 }
