@@ -40,5 +40,4 @@ Main --> Universe
 Main --> NBodySimulator
 NBodySimulator --> Universe
 Universe *-- Body
-Body --> Vector
 @enduml
