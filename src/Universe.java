@@ -34,8 +34,13 @@ public class Universe {
         System.out.println(bodies[i]);
       }
     } catch (FileNotFoundException e) { e.printStackTrace(); }
-  } //
+  }
 
+  public Universe(Body[] bodies, double radius) {
+      this.numBodies = bodies.length;
+      this.radius = radius;
+      this.bodies = bodies;
+  }
   public void update(double dt) {
     // Array de vectores para almacenar la fuerza que se aplica en cada cuerpo
     Vector[] f = new Vector[numBodies];
