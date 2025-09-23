@@ -1,4 +1,6 @@
 @startuml
+skinparam classAttributeIconSize 0
+
 class Main {
   + main(args: String[]): void
 }
@@ -36,8 +38,29 @@ class Body {
   + toString(): String
 }
 
-Main --> Universe
+class Vector {
+  - data: double[]
+  + Vector(vals: double[])
+  + plus(v: Vector): Vector
+  + minus(v: Vector): Vector
+  + scale(k: double): Vector
+  + magnitude(): double
+  + direction(): Vector
+  + cartesian(i: int): double
+}
+
+class UniverseFactory {
+  {static} + makeUniverseFromFile(fname: String): Universe
+  {static} + makeCentralConfiguration(numBodies: int, angleVelPos: double): Universe
+  {static} + makePlanetaryConfiguration(numPlanets: int): Universe
+  {static} + makeChoreography(nchoreography: int): Universe
+}
+
 Main --> NBodySimulator
+Main ..> UniverseFactory
+UniverseFactory --> Universe
 NBodySimulator --> Universe
 Universe *-- Body
+Body --> Vector
+Universe --> Vector
 @enduml
