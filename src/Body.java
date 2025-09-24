@@ -13,12 +13,13 @@ public class Body {
   private Vector v;           // velocity
   private final double mass;  // mass
   private final double G;
-  public Vector getPosition() { return r; }
-  public Vector getVelocity() { return v; }
+  private static final double DEFAULT_G = 6.67e-11;
+  public Vector getBodyPosition() { return r; }
+  public Vector getBodyVelocity() { return v; }
   public void setPosition(Vector r) { this.r = r; }
   public void setVelocity(Vector v) { this.v = v; }
   public double getMass() { return mass; }
-  private static final double DEFAULT_G = 6.67e-11;
+
 
 
     public Body(Vector r, Vector v, double mass) {

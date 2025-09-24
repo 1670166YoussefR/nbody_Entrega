@@ -6,14 +6,15 @@ class Main {
 }
 
 class NBodySimulator {
+  - universe : Universe
   - timeStep: double
   - pauseTime: int
   - trace: boolean
-  - universe: Universe
-  + NBodySimulator(u: Universe, dt: double, pt: int, trace: boolean)
-  + simulate(): void
-  - drawUniverse(): void
+  - integrator: Integrator
+  + NBodySimulator(u: Universe, dt: double, pt: int, trace: boolean, integrator: Integrator)
   - createCanvas(): void
+  - drawUniverse(): void
+  + simulate(): void
 }
 
 class Universe {
@@ -21,17 +22,26 @@ class Universe {
   - radius: double
   - bodies: Body[]
   + Universe(fname: String)
-  + update(dt: double): void
-  + getBodyPosition(i: int): Vector
-  + getNumBodies(): int
+  + Universe(bodies: Body[], radius: double)
+  + getRadius() : double
+  + getNumBodies() : int
+  + getPosition(i: int) : Vector
   + getRadius(): double
 }
 
 class Body {
-  - position: Vector
-  - velocity: Vector
-  - mass: double
+  - r : Vector
+  - v : Vector
+  - mass : double
+  - G : double
+  {static} - DEFAULT_G : double
   + Body(r: Vector, v: Vector, mass: double)
+  + Body(r: Vector, v: Vector, mass: double, G: double)
+  + getBodyPosition() : Vector
+  + getBodyVelocity() : Vector
+  + setPosition(r: Vector) : void
+  + setVelocity(v: Vector) : void
+  + getMass() : double
   + move(f: Vector, dt: double): void
   + forceFrom(b: Body): Vector
   + getPosition(): Vector
@@ -39,10 +49,16 @@ class Body {
 }
 
 class Vector {
+  - n : int
   - data: double[]
-  + Vector(vals: double[])
+  + Vector(n: int)
+  + Vector(data: double[])
+  + length() : int
+  + dot(v: Vector) : double
+  + magnitude() : double
   + plus(v: Vector): Vector
   + minus(v: Vector): Vector
+  + cartesian(i: int) : double
   + scale(k: double): Vector
   + magnitude(): double
   + direction(): Vector
@@ -53,14 +69,30 @@ class UniverseFactory {
   {static} + makeUniverseFromFile(fname: String): Universe
   {static} + makeCentralConfiguration(numBodies: int, angleVelPos: double): Universe
   {static} + makePlanetaryConfiguration(numPlanets: int): Universe
-  {static} + makeChoreography(nchoreography: int): Universe
+  {static} + makeChoreography(choreoFile: String, nchoreography: int): Universe
 }
 
+interface Integrator {
+  + step(u: Universe, dt: double): void
+}
+
+class EulerIntegrator implements Integrator {
+  + step(u: Universe, dt: double): void
+}
+
+class LeapfrogIntegrator implements Integrator {
+  + step(u: Universe, dt: double): void
+}
+
+' Relaciones
 Main --> NBodySimulator
-Main ..> UniverseFactory
-UniverseFactory --> Universe
+Main --> UniverseFactory
 NBodySimulator --> Universe
-Universe *-- Body
+NBodySimulator --> Integrator
+UniverseFactory --> Universe
+Universe --> Body
+Integrator --> Universe
+EulerIntegrator ..|> Integrator
+LeapfrogIntegrator ..|> Integrator
 Body --> Vector
-Universe --> Vector
 @enduml

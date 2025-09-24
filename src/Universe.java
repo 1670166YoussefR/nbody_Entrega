@@ -10,7 +10,7 @@ public class Universe {
 
   public double getRadius() { return radius; }
   public int getNumBodies() { return numBodies; }
-  public Vector getPosition(int i) { return bodies[i].getPosition(); }
+  public Vector getPosition(int i) { return bodies[i].getBodyPosition(); }
   public Body[] getBodies() { return bodies; }
 
   public Universe(String fname) {
