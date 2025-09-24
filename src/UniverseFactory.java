@@ -59,7 +59,7 @@ public class UniverseFactory {
             // ángulo aleatorio
             double angle = Math.random() * 2 * Math.PI - Math.PI;
             // distancia radial aleatoria (simplificada)
-            double rho = MIN_MASS + Math.random() * (MAX_MASS - MIN_MASS);
+            double rho = (RADIUS / 4.0) + Math.random() * (RADIUS / 2.0 - RADIUS / 4.0);
 
             // posición (rx, ry)
             double rx = Math.cos(angle) * rho;
@@ -112,15 +112,17 @@ public class UniverseFactory {
         Vector v2 = new Vector(new double[]{c3, c4});
         Vector v3 = new Vector(new double[]{-c3, c4});
 
+
+        double radius = 0.5;     // radio de escala del universo
         int numBodies = 3;
         Body[] bodies = new Body[numBodies];
         double mass = 1.0 / 3.0; // masa repartida entre los 3 cuerpos
-        double radius = 0.5;     // radio de escala del universo
+        double G = 1.0;
 
         // creación de los 3 cuerpos coreográficos
-        bodies[0] = new Body(r1, v1, mass);
-        bodies[1] = new Body(r2, v2, mass);
-        bodies[2] = new Body(r3, v3, mass);
+        bodies[0] = new Body(r1, v1, mass, G);
+        bodies[1] = new Body(r2, v2, mass, G);
+        bodies[2] = new Body(r3, v3, mass, G);
 
         return new Universe(bodies, radius);
     }

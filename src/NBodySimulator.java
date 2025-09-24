@@ -3,13 +3,15 @@ public class NBodySimulator {
   private final double timeStep;
   private final int pauseTime;
   private final boolean trace;
+  private final Integrator integrator;
 
   //Constructor del NBodySimulator que recibe el universo y los parametros de la simulacion
-  public NBodySimulator(Universe universe, double dt, int pt, boolean doTrace) {
+  public NBodySimulator(Universe universe, double dt, int pt, boolean doTrace, Integrator integrator) {
     this.universe = universe;
     this.timeStep = dt;
     this.pauseTime = pt;
     this.trace = doTrace;
+    this.integrator = integrator;
   }
 
   //Crea el canvas donde se va a dibujar
@@ -36,7 +38,7 @@ public class NBodySimulator {
     if (trace) StdDraw.clear(StdDraw.GRAY);
     while (true) {
       if (!trace) StdDraw.clear();
-      universe.update(timeStep);
+      integrator.step(universe, timeStep);
       drawUniverse();
       StdDraw.show();
       StdDraw.pause(pauseTime);

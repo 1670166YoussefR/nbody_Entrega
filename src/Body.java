@@ -12,14 +12,23 @@ public class Body {
   private Vector r;           // position
   private Vector v;           // velocity
   private final double mass;  // mass
+  private final double G;
   public Vector getPosition() { return r; }
   public Vector getVelocity() { return v; }
+  public void setPosition(Vector r) { this.r = r; }
+  public void setVelocity(Vector v) { this.v = v; }
   public double getMass() { return mass; }
+  private static final double DEFAULT_G = 6.67e-11;
+
 
     public Body(Vector r, Vector v, double mass) {
+        this(r, v, mass, DEFAULT_G);
+    }
+    public Body(Vector r, Vector v, double mass, double G) {
         this.r = r;
         this.v = v;
         this.mass = mass;
+        this.G = G;
     }
 
     public void move(Vector f, double dt) {
@@ -30,10 +39,9 @@ public class Body {
 
     public Vector forceFrom(Body b) {
         Body a = this;
-        double G = 6.67e-11;
         Vector delta = b.r.minus(a.r);
         double dist = delta.magnitude();
-        double magnitude = (G * a.mass * b.mass) / (dist * dist);
+        double magnitude = (this.G * a.mass * b.mass) / (dist * dist);
         return delta.direction().scale(magnitude);
     }
 
