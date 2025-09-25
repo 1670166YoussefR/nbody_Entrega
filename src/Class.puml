@@ -85,14 +85,13 @@ class LeapfrogIntegrator implements Integrator {
 }
 
 ' Relaciones
+Main ..> UniverseFactory
 Main --> NBodySimulator
-Main --> UniverseFactory
-NBodySimulator --> Universe
-NBodySimulator --> Integrator
-UniverseFactory --> Universe
-Universe --> Body
-Integrator --> Universe
+UniverseFactory ..> Universe
+NBodySimulator *-- "1" Universe
+NBodySimulator *-- "1" Integrator
+Universe *-- "1..*" Body
+Body --> "2" Vector
 EulerIntegrator ..|> Integrator
 LeapfrogIntegrator ..|> Integrator
-Body --> Vector
 @enduml
